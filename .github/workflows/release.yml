@@ -35,15 +35,16 @@ jobs:
     #   run: |
     #     git config --local user.name "GitHub Actions"
 
-
+    - name: Get version number
+      run: echo ::set-env name=VERSION_NUMBER::$(python -c "import semantic_release; print(semantic_release.get_version())" )
 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.refs/tags }}
-        release_name: Release ${{ github.refs/tags }}
+        tag_name: ${{ env.VERSION_NUMBER }}
+        release_name: Release ${{ env.VERSION_NUMBER }}
         draft: false
         prerelease: false
