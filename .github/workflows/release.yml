@@ -30,7 +30,10 @@ jobs:
     #   uses: softprops/action-gh-release@v1
     #   if: startsWith(github.ref, 'refs/tags/')
 
-
+    # - name: Create tag and push
+    #   if: success()
+    #   run: |
+    #     git config --local user.name "GitHub Actions"
 
 
 
@@ -40,13 +43,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        
-        tag_name: ${{ env.VERSION_NUMBER }}
-        release_name: Release ${{ env.VERSION_NUMBER }}
+        tag_name: ${{ github.refs/tags/ }}
+        release_name: Release ${{ github.refs/tags/ }}
         draft: false
         prerelease: false
-        
-    - name: Create tag and push
-      if: success()
-      run: |
-        git config --local user.name "GitHub Actions"
