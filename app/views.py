@@ -14,4 +14,5 @@ def register(request):
     return HttpResponse("Register")
 
 def login(request):
+    print("login")
     return HttpResponse("login")
