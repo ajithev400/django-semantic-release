@@ -34,6 +34,14 @@ jobs:
     #   if: success()
     #   run: |
     #     git config --local user.name "GitHub Actions"
+    - name: Set version number
+      env:
+        VERSION_NUMBER: 1.0.0
+    
+    - name: Set version number
+      run: echo "export VERSION_NUMBER=1.0.0" >> $GITHUB_ENV
+
+
 
     - name: Get version number
       run: echo ::set-env name=VERSION_NUMBER::$(python -c "import semantic_release; print(semantic_release.get_version())" )
