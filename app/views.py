@@ -9,6 +9,9 @@ def home(request):
 
     return HttpResponse("home")
 
+def userprofile(request):
+    return HttpResponse("profile")
+
 def register(request):
     print("register")
     return HttpResponse("Register")
