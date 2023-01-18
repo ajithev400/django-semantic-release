@@ -30,21 +30,20 @@ jobs:
     #   uses: softprops/action-gh-release@v1
     #   if: startsWith(github.ref, 'refs/tags/')
 
-    - name: Release
-      run: |
-        source venv/bin/activate
-        pip install semantic-release
+    # - name: Release
+    #   run: |
+    #     source venv/bin/activate
+    #     pip install semantic-release
     
-    - name: Semantic-release
-      run: |
-        source venv/bin/activate
-        semantic-release
+    # - name: Semantic-release
+    #   run: |
+    #     source venv/bin/activate
+    #     semantic-release
 
-    - name: Create tag and push
-      if: success()
-      run: |
-        git config --local user.name "GitHub Actions"
-
+    # - name: Create tag and push
+    #   if: success()
+    #   run: |
+    #     git config --local user.name "GitHub Actions"
     
 
     # - name: Create Release
@@ -59,3 +58,23 @@ jobs:
     #     prerelease: false
 
 
+release:
+  name: Semantic Release
+  runs-on: ubuntu-latest
+  concurrency: push
+  # needs: [test, mypy, beautify]
+  if: github.repository == 'relekang/python-semantic-release'
+
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      fetch-depth: 0
+      # ref: ${{ needs.beautify.outputs.new_sha }}
+  - name: Fetch master
+    run: git fetch --prune origin +refs/heads/master:refs/remotes/origin/master
+  - name: Python Semantic Release
+    uses: ./
+    with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      # repository_username: ${{ secrets.PYPI_USERNAME }}
+      # repository_password: ${{ secrets.PYPI_PASSWORD }}  
