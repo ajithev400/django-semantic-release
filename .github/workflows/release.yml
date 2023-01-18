@@ -37,7 +37,8 @@ jobs:
     - name: Semantic-release
       run: |
         source venv/bin/activate
-        semantic-release
+        semantic-release print-version
+        semantic-release 
 
     - name: Create tag and push
       if: success()
