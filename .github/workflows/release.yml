@@ -8,63 +8,44 @@ on:
 jobs:
   release:
   
-    name: Semantic Release
-    runs-on: ubuntu-latest
-    concurrency: push
-    # needs: [test, mypy, beautify]
-    if: github.repository == 'relekang/python-semantic-release'
 
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        fetch-depth: 0
-        # ref: ${{ needs.beautify.outputs.new_sha }}
-    - name: Fetch master
-      run: git fetch --prune origin +refs/heads/master:refs/remotes/origin/master
-    - name: Python Semantic Release
-      uses: ./
-      with:
-        github_token: ${{ secrets.TOKEN }}
-        # repository_username: ${{ secrets.PYPI_USERNAME }}
-        # repository_password: ${{ secrets.PYPI_PASSWORD }} 
-         
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v2
-  #     with:
-  #       python-version: 3.9
-  #   - name: Install dependencies
-  #     run: |
-  #       python -m venv venv
-  #       source venv/bin/activate
-  #       pip install -r requirements.txt
-  #   - name: Run tests
-  #     run: |
-  #       source venv/bin/activate
-  #       python manage.py test
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        python manage.py test
 
 
     # - name: Release
     #   uses: softprops/action-gh-release@v1
     #   if: startsWith(github.ref, 'refs/tags/')
 
-    # - name: Release
-    #   run: |
-    #     source venv/bin/activate
-    #     pip install semantic-release
+    - name: Release
+      run: |
+        source venv/bin/activate
+        pip install python-semantic-release
     
-    # - name: Semantic-release
-    #   run: |
-    #     source venv/bin/activate
-    #     semantic-release
+    - name: Semantic-release
+      run: |
+        source venv/bin/activate
+        semantic-release
 
-    # - name: Create tag and push
-    #   if: success()
-    #   run: |
-    #     git config --local user.name "GitHub Actions"
+    - name: Create tag and push
+      if: success()
+      run: |
+        git config --local user.name "GitHub Actions"
     
 
     # - name: Create Release
