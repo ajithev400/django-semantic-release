@@ -1,3 +1,9 @@
+## v1.3.0 (2023-01-24)
+
+### Feat
+
+- changes in requirements.txt
+
 ## v1.2.1 (2023-01-18)
 
 ### Fix
