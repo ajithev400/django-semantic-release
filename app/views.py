@@ -19,3 +19,4 @@ def register(request):
 def login(request):
     # print("login")
     return HttpResponse("login")
+
